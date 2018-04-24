@@ -1,13 +1,18 @@
 // ALU Functions
 
-`define ADD_FN 				3'b000
-`define ADDC_FN 			3'b001
-`define SUB_FN 				3'b010
-`define SUBC_FN 			3'b011
-`define AND_FN 				3'b100
-`define OR_FN 				3'b101
+`define ADD_FN 				2'b00
+`define AND_FN 				2'b01
+`define OR_FN 				2'b10
 
-// JUMP types
+// ALU Opcodes
+
+`define ADA_OP 				3'b010
+`define ANA_OP 				3'b011
+`define ADR_OP 				4'b1001
+`define ANR_OP 				4'b1010
+`define ORR_OP 				4'b1011
+
+// JUMP Types
 
 `define NON_CONDITIONAL		2'b00
 `define C_CONDITIONAL		2'b01
