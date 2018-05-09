@@ -33,7 +33,7 @@ module data_path(clk, rst);
 	
 	// PC
 
-	jump_selcetor jump_selcetor(.opcode(out_DI[2:1]), .CZN(out_CZN), .enable(ld_PC));
+	jump_selector jmp_selector(.opcode(out_DI[2:1]), .CZN(out_CZN), .enable(ld_PC));
 	
 	pc_register PC(.clk(clk), .rst(rst), .ld(ld_PC), .cen(cen_PC), .in(out_TR), .out(out_PC));
 
