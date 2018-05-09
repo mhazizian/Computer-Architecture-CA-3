@@ -2,12 +2,12 @@
 
 module register_file(
 	clk, rst, write_reg, write_data,
-	write_reg_en, read_reg1, read_reg2,
+	write_reg_en, read_reg1,
 	read_data1, read_data2
 	);
 
 	input clk, rst, write_reg_en;
-	input [1:0] read_reg1, read_reg2, write_reg;
+	input [1:0] read_reg1, write_reg;
 	input [7:0] write_data;
 	output logic [7:0] read_data1, read_data2;
 	
@@ -27,8 +27,8 @@ module register_file(
 // Read registers on posedge of clock
 	
 	always @(posedge clk) begin
-		if(read_reg1)	read_data1 = acc[read_reg1];
-		if(read_reg2)	read_data2 = acc[read_reg2];
+		read_data1 = acc[read_reg1];
+		read_data2 = acc[write_reg];
 	end
 
 // Write regsiter on posedge of clock

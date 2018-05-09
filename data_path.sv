@@ -2,52 +2,109 @@ module data_path(clk, rst);
 	
 	input clk, rst;
 
-	logic ld_PC, cen_PC, ld_IR, ld_DI, ld_ALU;
+	logic ld_PC, cen_PC, ld_IR, ld_DI, ld_ALU, write_en_rf, sel_IR_3_2, 
+	sel_IR_4_3, sel_RF_write_src_TR_7_0, write_reg_en, sel_MEM_src_TR, sel_MEM_src_PC, 
+	sel_ALU_src_reg1, sel_ALU_src_TR, ld_CZN, sel_CZN_src_RF, sel_CZN_src_ALU,
+	ld_TR_7_0;
 	
-	logic [12:0] out_TR, out_PC;
+	logic [12:0] out_TR, out_PC, out_mux_src_adr;
 	
-	logic [7:0] out_MEM, out_IR, out_ALU, out_ALU_reg;
+	logic [7:0] out_MEM, out_IR, out_ALU, out_ALU_reg, out_mux_write_src, 
+	out_reg1, out_reg2;
 	
 	logic [4:0] out_DI;
 	
-	pc_register PC(
-	.clk(clk), 
-	.rst(rst),
-	.ld(ld_PC),
-	.cen(cen_PC),
-	.in(out_TR),
-	.out(out_PC)
-	);
-
-// 13 bit for TR
-
-
-// 	8 bit for IR
-
-	register #(.WORD_LENGTH(8)) IR(
-    .clk(clk),
-    .rst(rst),
-    .in(out_MEM),
-    .out(out_IR),
-	.ld(ld_IR)
-	);
+	logic [2:0] out_CZN, CZN_from_ALU, CZN_from_RF, out_mux_src_CZN;
 	
-//	5 bit for DI
+	logic [1:0] out_mux_dst_src, ALU_OP;
+	
+	
+	// CZN
+	
+	mux_2_to_1 #(.WORD_LENGTH(3)) mux_CZN(.sel_first(sel_CZN_src_RF), .sel_second(sel_CZN_src_ALU),
+	
+	.first(CZN_from_RF), .second(CZN_from_ALU), .out(out_mux_src_CZN));
+	
+	
+	
+	register #(.WORD_LENGTH(3)) CZN(.clk(clk), .rst(rst), .in(out_mux_src_CZN), .out(out_CZN), .ld(ld_CZN));
+	
+	
+	
+	// PC
 
-	register #(.WORD_LENGTH(5)) DI(
-    .clk(clk),
-    .rst(rst),
-    .in(out_MEM [4:0]),
-    .out(out_DI),
-	.ld(ld_DI)
-	);
+	jump_selcetor jump_selcetor(.opcode(out_DI[2:1]), .CZN(out_CZN), .enable(ld_PC));
+	
+	pc_register PC(.clk(clk), .rst(rst), .ld(ld_PC), .cen(cen_PC), .in(out_TR), .out(out_PC));
 
-//	8 bit for ALU_out
+	
+	
+	// Memory
 
-	register #(.WORD_LENGTH(5)) ALU(
-    .clk(clk),
-    .rst(rst),
-    .in(out_ALU),
-    .out(out_ALU_reg),
-	.ld(ld_ALU)
-	);
+	mux_2_to_1 #(.WORD_LENGTH(13)) mux_pc(.sel_first(sel_MEM_src_TR), .sel_second(sel_MEM_src_PC), 
+	
+	.first(out_TR), .second(out_PC), .out(out_mux_src_adr));
+
+	
+	
+	memory memory(.rst(rst), .address(out_mux_src_adr), .command(out_MEM), .write_data(out_reg2));
+	
+	
+	
+	// 13 bit for TR
+
+	tr_register TR(.clk(clk), .rst(rst), .ld_8(ld_TR_7_0), .ld_5(ld_TR_12_8), .in_8(out_MEM[7:0]), .in_5(out_MEM[4:0]), .out(out_TR));
+
+
+	// 	8 bit for IR
+
+	register #(.WORD_LENGTH(8)) IR(.clk(clk), .rst(rst), .in(out_MEM), .out(out_IR), .ld(ld_IR));
+
+
+	
+	//	5 bit for DI
+
+	register #(.WORD_LENGTH(5)) DI(.clk(clk), .rst(rst), .in(out_MEM [4:0]), .out(out_DI), .ld(ld_DI));
+
+	
+	
+	//	Register file
+
+	mux_2_to_1 #(.WORD_LENGTH(2)) mux_dst_rf(.sel_first(sel_IR_3_2), .sel_second(sel_IR_4_3),
+	
+	.first(out_IR[3:2]), .second(out_IR[4:3]), .out(out_mux_dst_src));
+	
+	
+	
+	mux_3_to_1 #(.WORD_LENGTH(8)) mux_write_data_rf(.first(out_TR[7:0]) , .second(out_reg1), .third(out_ALU_reg), 
+	
+	.sel_first(sel_RF_write_src_TR_7_0), .sel_second(sel_writeSRC_reg1), .sel_third(sel_writeSRC_ALU), .out(out_mux_write_src));
+	
+	
+	
+	register_file(.clk(clk), .rst(rst), .write_reg(out_mux_dst_src), .write_data(out_mux_write_src),
+	
+	.write_reg_en(write_reg_en), .read_reg1(out_IR[1:0]), .read_data1(out_reg1), .read_data2(out_reg2));
+
+
+	
+	//	ALU
+	
+	ALU_controller alu_controller(.opcode(out_IR[7:4]), .alu_operation(ALU_OP));
+	
+	
+	
+	mux_2_to_1 #(.WORD_LENGTH(8)) mux_alu_src(.sel_first(sel_ALU_src_reg1), .sel_second(sel_ALU_src_TR),
+	
+	.first(out_reg1), .second(out_TR[7:0]), .out(out_mux_ALU_src));
+	
+	
+	
+	ALU alu(.alu_in1(out_mux_ALU_src), .alu_in2(out_reg2), .c_in(out_CZN[0]), .opcode(ALU_OP), .alu_out(out_ALU), .CZN_from_ALU(CZN_from_ALU));
+	
+	
+	
+	register #(.WORD_LENGTH(5)) ALU_reg(.clk(clk), .rst(rst), .in(out_ALU), .out(out_ALU_reg), .ld(ld_ALU));
+
+
+endmodule
