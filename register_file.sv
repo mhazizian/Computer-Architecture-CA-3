@@ -2,19 +2,25 @@
 
 module register_file(
 	clk, rst, write_reg, write_data,
-	write_reg_en, read_reg1,
-	read_data1, read_data2
+	write_reg_en, read_reg1, read_reg2,
+	read_data1, read_data2, CZN_from_RF
 	);
 
 	input clk, rst, write_reg_en;
-	input [1:0] read_reg1, write_reg;
+	input [1:0] read_reg1, read_reg2, write_reg;
 	input [7:0] write_data;
 	output logic [7:0] read_data1, read_data2;
+	output logic [2:0] CZN_from_RF;
 	
 	reg[7:0] acc[0:3];	
 	logic[3:0] ld_reg;	
 	int j;
 	genvar i;
+	
+//	Set CZN flags
+
+	assign CZN_from_ALU[1] = (write_data == 8'b0 ? 1 : 0);
+	assign CZN_from_ALU[2] = (write_data < 0);
 	
 // Generate 4 regsiters
 	
@@ -28,7 +34,7 @@ module register_file(
 	
 	always @(posedge clk) begin
 		read_data1 = acc[read_reg1];
-		read_data2 = acc[write_reg];
+		read_data2 = acc[read_reg2];
 	end
 
 // Write regsiter on posedge of clock
