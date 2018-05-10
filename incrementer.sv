@@ -1,8 +1,10 @@
-module incrementer_13(num, q);
+`include "defines.sv"
 
-	input [12:0]num;
-	output logic[12:0]q;
+module incrementer #(parameter integer WORD_LENGTH) (in, out);
 
-	assign q = num + 1;
+	input[WORD_LENGTH - 1:0] in;
+	output logic[WORD_LENGTH - 1:0] out;
+
+	assign out = in + 1;	
 	
 endmodule

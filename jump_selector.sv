@@ -1,6 +1,6 @@
 `include "defines.sv"
 
-module jump_selcetor(opcode, CZN, enable);
+module jump_selector(opcode, CZN, enable);
 	input [1:0] opcode;
 	input [2:0] CZN;
 	output logic enable;

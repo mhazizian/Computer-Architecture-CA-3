@@ -8,15 +8,17 @@ module data_path(clk, rst);
 			
 				sel_MEM_src_PC, sel_ALU_src_reg1, sel_ALU_src_TR, ld_CZN,
 			
-				sel_CZN_src_RF, sel_CZN_src_ALU, sel_PC_src_JUMP, ld_TR;
+				sel_CZN_src_RF, sel_CZN_src_ALU, sel_PC_src_JUMP, ld_TR,
+				
+				sel_RF_write_src_ALU, sel_RF_write_src_reg1;
 	
 	
-	logic [12:0] out_TR, out_PC, out_mux_src_adr, out_PC_plus1;
+	logic [12:0] out_TR, out_PC, out_mux_src_adr, out_PC_plus1, out_mux_src_pc;
 	
 	
 	logic [7:0] out_MEM, out_IR, out_ALU, out_ALU_reg, out_mux_write_data, 
 	
-				out_reg1, out_reg2;
+				out_reg1, out_reg2, out_mux_ALU_src;
 	
 	logic [4:0] out_DI;
 	
@@ -27,12 +29,11 @@ module data_path(clk, rst);
 	
 	// PC
 
-	jump_selcetor jump_selcetor(.opcode(out_DI[2:1]), .CZN(out_CZN), .enable(sel_PC_src_JUMP));
+	jump_selcetor jump_selecetor(.opcode(out_DI[2:1]), .CZN(out_CZN), .enable(sel_PC_src_JUMP));
 	
 	register #(.WORD_LENGTH(13)) PC(.clk(clk), .rst(rst), .in(out_mux_src_pc), .out(out_PC), .ld(ld_PC));
-
-	incrementer_13 pc_incrementer(.num(out_PC), .q(out_PC_plus1));
-		
+	
+	incrementer #(.WORD_LENGTH(13)) pc_incrementer(.in(out_PC), .out(out_PC_plus1));
 	
 	mux_2_to_1 #(.WORD_LENGTH(13)) mux_pc(.sel_first(sel_PC_src_JUMP), .sel_second(~sel_PC_src_JUMP), 
 	
@@ -75,7 +76,7 @@ module data_path(clk, rst);
 	
 				.second(out_reg1), .third(out_ALU_reg), .sel_first(sel_RF_write_src_TR_12_5), 
 				
-				.sel_second(sel_writeSRC_reg1), .sel_third(sel_writeSRC_ALU), .out(out_mux_write_data));
+				.sel_second(sel_RF_write_src_reg1), .sel_third(sel_RF_write_src_ALU), .out(out_mux_write_data));
 		
 	
 	register_file(.clk(clk), .rst(rst), .write_reg(out_mux_dst_src), .write_data(out_mux_write_data),

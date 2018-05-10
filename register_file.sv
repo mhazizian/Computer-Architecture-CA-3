@@ -19,8 +19,8 @@ module register_file(
 	
 //	Set CZN flags
 
-	assign CZN_from_ALU[1] = (write_data == 8'b0 ? 1 : 0);
-	assign CZN_from_ALU[2] = (write_data < 0);
+	assign CZN_from_RF[1] = (write_data == 8'b0 ? 1 : 0);
+	assign CZN_from_RF[2] = (write_data < 0);
 	
 // Generate 4 regsiters
 	
