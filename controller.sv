@@ -34,7 +34,7 @@ module Controller(
 	logic [3:0] ps, ns;
 
 
-	always @(instruction) 
+	always @(posedge clk, instruction) 
     begin : TRANSITION_DECIDE
 		ns = `CONTROLLER_IF;	
       
