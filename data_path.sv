@@ -10,7 +10,7 @@ module data_path(clk, rst);
 			
 				sel_CZN_src_RF, sel_CZN_src_ALU, sel_PC_src_JUMP, ld_TR,
 				
-				sel_RF_write_src_ALU, sel_RF_write_src_reg1;
+				sel_RF_write_src_ALU, sel_RF_write_src_reg1, MEM_read, MEM_write;
 	
 	
 	logic [12:0] out_TR, out_PC, out_mux_src_adr, out_PC_plus1, out_mux_src_pc;
@@ -42,7 +42,7 @@ module data_path(clk, rst);
 	
 	// Memory
 
-	memory memory(.rst(rst), .address(out_mux_src_adr), .command(out_MEM), .write_data(out_reg2));
+	memory memory(.rst(rst), .address(out_mux_src_adr), .command(out_MEM), .write_data(out_reg2), .mem_read(MEM_read), .mem_writer(MEM_write));
 	
 	
 	mux_2_to_1 #(.WORD_LENGTH(13)) mux_memory(.sel_first(sel_MEM_src_TR), .sel_second(sel_MEM_src_PC), 
@@ -62,7 +62,7 @@ module data_path(clk, rst);
 	
 	//	5 bit for DI
 
-	register #(.WORD_LENGTH(5)) DI(.clk(clk), .rst(rst), .in(out_MEM [4:0]), .out(out_DI), .ld(ld_DI));
+	register #(.WORD_LENGTH(5)) DI(.clk(clk), .rst(rst), .in(out_IR [4:0]), .out(out_DI), .ld(ld_DI));
 
 	
 	//	Register file

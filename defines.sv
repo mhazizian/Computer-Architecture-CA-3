@@ -18,3 +18,12 @@
 `define C_CONDITIONAL		2'b01
 `define Z_CONDITIONAL		2'b10
 `define N_CONDITIONAL		2'b11
+
+// Instructions
+
+`define LDI_OP				3'b111
+
+//Controller States
+
+`define CONTROLLER_IF 		4'd1
+`define CONTROLLER_LDI 		4'd2
