@@ -4,7 +4,7 @@ module data_path(clk, rst);
 
 	logic ld_PC, cen_PC, ld_IR, ld_DI, ld_ALU, write_en_rf, sel_IR_3_2, 
 	
-				sel_IR_4_3, sel_RF_write_src_TR_12_5, write_reg_en, sel_MEM_src_TR, 
+				sel_DI_4_3, sel_RF_write_src_TR_12_5, write_reg_en, sel_MEM_src_TR, 
 			
 				sel_MEM_src_PC, sel_ALU_src_reg1, sel_ALU_src_TR, ld_CZN,
 			
@@ -32,7 +32,7 @@ module data_path(clk, rst);
 
 		.ld_PC(ld_PC), .cen_PC(cen_PC), .ld_IR(ld_IR), .ld_DI(ld_DI),
 
-		.ld_ALU(ld_ALU), .write_en_rf(write_en_rf), .sel_IR_3_2(sel_IR_3_2), .sel_IR_4_3(sel_IR_4_3),
+		.ld_ALU(ld_ALU), .write_en_rf(write_en_rf), .sel_IR_3_2(sel_IR_3_2), .sel_DI_4_3(sel_DI_4_3),
 
 		.sel_RF_write_src_TR_12_5(sel_RF_write_src_TR_12_5), .write_reg_en(write_reg_en), .sel_MEM_src_TR(sel_MEM_src_TR),
 
@@ -87,7 +87,7 @@ module data_path(clk, rst);
 	
 	//	Register file
 
-	mux_2_to_1 #(.WORD_LENGTH(2)) mux_dst_rf(.sel_first(sel_IR_3_2), .sel_second(sel_IR_4_3),
+	mux_2_to_1 #(.WORD_LENGTH(2)) mux_dst_rf(.sel_first(sel_IR_3_2), .sel_second(sel_DI_4_3),
 	
 				.first(out_IR[3:2]), .second(out_DI[4:3]), .out(out_mux_dst_src));
 	

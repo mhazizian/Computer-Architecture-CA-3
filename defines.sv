@@ -22,8 +22,10 @@
 // Instructions
 
 `define LDI_OP				3'b111
+`define MVR_OP				4'b1000
 
 //Controller States
 
 `define CONTROLLER_IF 		4'd1
 `define CONTROLLER_LDI 		4'd2
+`define CONTROLLER_MVR 		4'd3
