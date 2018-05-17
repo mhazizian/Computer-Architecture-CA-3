@@ -31,4 +31,5 @@
 
 `define CONTROLLER_LDI 		4'd3
 `define CONTROLLER_MVR 		4'd4
-`define CONTROLLER_MVR 		4'd5
+`define CONTROLLER_RTYPE 	4'd5
+`define CONTROLLER_RTYPE_T 	4'd6

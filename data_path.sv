@@ -26,7 +26,7 @@ module data_path(clk, rst);
 	
 	logic [2:0] out_CZN, CZN_from_ALU, CZN_from_RF, out_mux_src_CZN;
 	
-	logic [1:0] out_mux_dst_src, ALU_OP;
+	logic [1:0] out_mux_dst_src, ALU_op;
 
 	Controller controller
 	(
@@ -111,7 +111,7 @@ module data_path(clk, rst);
 	
 	//	ALU
 	
-	ALU_controller alu_controller(.opcode(out_IR[7:4]), .alu_operation(ALU_OP));
+	ALU_controller alu_controller(.opcode(out_IR[7:4]), .alu_operation(ALU_op));
 	
 	mux_2_to_1 #(.WORD_LENGTH(8)) mux_alu_src(.sel_first(sel_ALU_src_reg1), 
 		
@@ -120,7 +120,7 @@ module data_path(clk, rst);
 	
 	ALU alu(.alu_in1(out_mux_ALU_src), .alu_in2(out_reg2), .c_in(out_CZN[0]),
 	
-				.opcode(ALU_OP), .alu_out(out_ALU), .CZN_from_ALU(CZN_from_ALU));
+				.opcode(ALU_op), .alu_out(out_ALU), .CZN_from_ALU(CZN_from_ALU));
 	
 	
 	

@@ -44,10 +44,18 @@ module Controller(
 			`CONTROLLER_Decode : begin
 				if (instruction[3:1] == `LDI_OP) ns = `CONTROLLER_LDI;
 				else if (instruction[3:0] == `MVR_OP) ns = `CONTROLLER_MVR;
+				else if (
+					instruction[3:0] == `ADR_OP |
+					instruction[3:0] == `ANR_OP |
+					instruction[3:0] == `ORR_OP
+				) ns = `CONTROLLER_RTYPE;
 			end
 
 			`CONTROLLER_LDI : ns = `CONTROLLER_IF;
 			`CONTROLLER_MVR : ns = `CONTROLLER_IF;
+
+			`CONTROLLER_RTYPE : ns = `CONTROLLER_RTYPE_T;
+			`CONTROLLER_RTYPE_T: ns = `CONTROLLER_IF;
 
 		endcase // ps
 	end
@@ -62,7 +70,6 @@ module Controller(
 
 		case(ps)
 			`CONTROLLER_IF : begin
-
 				// Set IR 
 				ld_IR = 1;
 				sel_MEM_src_PC = 1;
@@ -81,12 +88,25 @@ module Controller(
 				ld_DI = 1;
 			end
 
-			`CONTROLLER_LDI : begin
+			`CONTROLLER_MVR : begin
 				sel_RF_write_src_reg1 = 1;
 				write_en_rf = 1;
 				sel_DI_4_3 = 1;
 				ld_CZN = 1;
 				sel_CZN_src_ALU = 1;
+			end
+
+			`CONTROLLER_RTYPE : begin
+				sel_IR_3_2 = 1;
+				ld_ALU = 1;
+				sel_ALU_src_reg1 = 1;
+				ld_CZN = 1;
+				sel_CZN_src_ALU = 1;
+			end
+
+			`CONTROLLER_RTYPE_T : begin
+				sel_RF_write_src_ALU = 1;
+				write_en_rf = 1;
 			end
 		endcase // ps
 	end
