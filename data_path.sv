@@ -36,7 +36,7 @@ module data_path(clk, rst);
 
 		.sel_RF_write_src_TR_12_5(sel_RF_write_src_TR_12_5), .write_reg_en(write_reg_en), .sel_MEM_src_TR(sel_MEM_src_TR),
 
-		.sel_MEM_src_PC(sel_MEM_src_PC), .sel_ALU_src_reg1(sel_ALU_src_reg1), .sel_ALU_src_reg1(sel_ALU_src_reg1),
+		.sel_MEM_src_PC(sel_MEM_src_PC), .sel_ALU_src_reg1(sel_ALU_src_reg1),
 
 		.sel_ALU_src_TR(sel_ALU_src_TR), .ld_CZN(ld_CZN), .sel_CZN_src_RF(sel_CZN_src_RF),
 
@@ -99,7 +99,7 @@ module data_path(clk, rst);
 				.sel_second(sel_RF_write_src_reg1), .sel_third(sel_RF_write_src_ALU), .out(out_mux_write_data));
 		
 	
-	register_file(.clk(clk), .rst(rst), .write_reg(out_mux_dst_src), .write_data(out_mux_write_data),
+	register_file RF(.clk(clk), .rst(rst), .write_reg(out_mux_dst_src), .write_data(out_mux_write_data),
 	
 				.write_reg_en(write_reg_en), .read_reg1(out_IR[1:0]), .read_reg2(out_mux_dst_src), 
 			
