@@ -39,9 +39,18 @@
 `define CONTROLLER_LDI 		4'd4
 `define CONTROLLER_MVR 		4'd5
 `define CONTROLLER_RTYPE 	4'd6
-`define CONTROLLER_RTYPE_T 	4'd7
+`define CONTROLLER_ALU_TO_RF 	4'd7
 
 `define CONTROLLER_JMP 		4'd8
 `define CONTROLLER_STA 		4'd9
 `define CONTROLLER_LD_MEM 	4'd10
 `define CONTROLLER_LDA 		4'd11
+`define CONTROLLER_MEM_TO_ALU 	4'd12
+`define CONTROLLER_ALU_TO_RF_D 	4'd13
+
+
+
+
+
+
+

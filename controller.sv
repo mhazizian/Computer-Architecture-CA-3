@@ -66,8 +66,8 @@ module Controller(
 			`CONTROLLER_LDI : ns = `CONTROLLER_IF;
 			`CONTROLLER_MVR : ns = `CONTROLLER_IF;
 
-			`CONTROLLER_RTYPE : ns = `CONTROLLER_RTYPE_T;
-			`CONTROLLER_RTYPE_T: ns = `CONTROLLER_IF;
+			`CONTROLLER_RTYPE : ns = `CONTROLLER_ALU_TO_RF;
+			`CONTROLLER_ALU_TO_RF: ns = `CONTROLLER_IF;
 
 			`CONTROLLER_IF2 : begin
 				case(instruction[3:1])
@@ -88,13 +88,16 @@ module Controller(
 				case(instruction[3:1])
 
 					`LDA_OP : ns = `CONTROLLER_LDA;
-					`ADA_OP : ns = `CONTROLLER_LD_MEM;
-					`ANA_OP : ns = `CONTROLLER_LD_MEM;
+					`ADA_OP : ns = `CONTROLLER_MEM_TO_ALU;
+					`ANA_OP : ns = `CONTROLLER_MEM_TO_ALU;
 
 				endcase
 			end
 
 			`CONTROLLER_LDA : ns = `CONTROLLER_IF;
+
+			`CONTROLLER_MEM_TO_ALU : ns = `CONTROLLER_ALU_TO_RF_D;
+			`CONTROLLER_ALU_TO_RF_D : ns = `CONTROLLER_IF;
 
 		endcase // ps
 	end
@@ -143,7 +146,7 @@ module Controller(
 				sel_CZN_src_ALU = 1;
 			end
 
-			`CONTROLLER_RTYPE_T : begin
+			`CONTROLLER_ALU_TO_RF : begin
 				sel_RF_write_src_ALU = 1;
 				write_en_rf = 1;
 			end
@@ -185,8 +188,24 @@ module Controller(
 				sel_CZN_src_RF = 1;
 			end
 
+			`CONTROLLER_MEM_TO_ALU : begin
+				sel_ALU_src_TR = 1;
+				sel_DI_4_3 = 1;
+				ld_ALU = 1;
+				ld_CZN = 1;
+				sel_CZN_src_ALU = 1;
+			end
+
+			`CONTROLLER_ALU_TO_RF_D : begin
+				sel_RF_write_src_ALU = 1;
+				sel_DI_4_3 = 1;
+				write_en_rf = 1;
+			end
+
 		endcase // ps
 	end
+
+
 
 	always @(posedge clk, posedge rst)
 	begin : TRANSITION_APPLY
