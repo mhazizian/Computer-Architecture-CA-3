@@ -115,7 +115,7 @@ module data_path(clk, rst);
 	
 	mux_2_to_1 #(.WORD_LENGTH(8)) mux_alu_src(.sel_first(sel_ALU_src_reg1), 
 		
-				.sel_second(sel_ALU_src_TR),.first(out_reg1), .second(out_TR[12:5]), .out(out_mux_ALU_src));
+				.sel_second(sel_ALU_src_TR),.first(out_reg1), .second(out_TR[7:0]), .out(out_mux_ALU_src));
 				
 	
 	ALU alu(.alu_in1(out_mux_ALU_src), .alu_in2(out_reg2), .c_in(out_CZN[0]),
@@ -124,7 +124,7 @@ module data_path(clk, rst);
 	
 	
 	
-	register #(.WORD_LENGTH(5)) ALU_reg(.clk(clk), .rst(rst), .in(out_ALU), .out(out_ALU_reg), .ld(ld_ALU));
+	register #(.WORD_LENGTH(8)) ALU_reg(.clk(clk), .rst(rst), .in(out_ALU), .out(out_ALU_reg), .ld(ld_ALU));
 	
 		
 	// CZN

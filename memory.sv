@@ -9,7 +9,7 @@ module memory(rst, address, command, write_data, mem_read, mem_write);
 	reg[7:0] command_memory[0:8191];
 
 	always @(address, mem_write)	begin
-		if (write_data)
+		if (mem_write)
 			command_memory[address] <= write_data;
 	end
 	
@@ -49,10 +49,13 @@ module memory(rst, address, command, write_data, mem_read, mem_write);
 		command_memory[3]	<=	{3'b001, 5'b0};					// STA {OPCODE, ADR[12:8]}
 		command_memory[4]	<=	{8'b11111111};					// STA {OPCODE, ADR[7:0]} // ADR = 255
 	
-		command_memory[5]	<=	{3'b010, 5'b0};					// ADA {OPCODE, ADR[12:8]}
-		command_memory[6]	<=	{8'b11111111};	 				// ADA {OPCODE, ADR[7:0]} // ADR = 255 // R[3] = 14S
+		command_memory[5]	<=	{3'b011, 5'b0};					// ADA {OPCODE, ADR[12:8]}
+		command_memory[6]	<=	{8'b11111111};	 				// ADA {OPCODE, ADR[7:0]} // ADR = 255 // R[3] = 14
+		
+//		command_memory[5]	<=	{3'b010, 5'b0};					// ADA {OPCODE, ADR[12:8]}
+//		command_memory[6]	<=	{8'b11111111};	 				// ADA {OPCODE, ADR[7:0]} // ADR = 255 // R[3] = 60
 	
-		command_memory[127] <= 	8'b00000111;					// DATA
+		command_memory[127] <= 	8'b00011110;					// DATA
 
 	end
 	
