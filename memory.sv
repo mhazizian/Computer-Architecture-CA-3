@@ -14,7 +14,8 @@ module memory(rst, address, command, write_data, mem_read, mem_writer);
 	end
 	
 	always @(posedge rst) begin
-		command_memory <= '{default : 8'b0};
+		command_memory 		<= '{default : 8'b0};
+		command_memory[0] 	<=	{3'b111, 2'b11, 2'b00, 1'b1}; // LDI {OPCODE, ADDRESS_OP, JUMP_OP, DONT_CARE}
 	end
 	
 	always @(address) begin
