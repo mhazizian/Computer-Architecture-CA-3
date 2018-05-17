@@ -11,7 +11,7 @@ module Controller(
 				
 		sel_MEM_src_PC, sel_ALU_src_reg1, sel_ALU_src_TR, ld_CZN,
 				
-		sel_CZN_src_RF, sel_CZN_src_ALU, sel_PC_src_JUMP, ld_TR,
+		sel_CZN_src_RF, sel_CZN_src_ALU, ld_TR,
 					
 		sel_RF_write_src_ALU, sel_RF_write_src_reg1, MEM_read, MEM_write
 
@@ -25,7 +25,7 @@ module Controller(
 				
 		sel_MEM_src_PC, sel_ALU_src_reg1, sel_ALU_src_TR, ld_CZN,
 				
-		sel_CZN_src_RF, sel_CZN_src_ALU, sel_PC_src_JUMP, ld_TR,
+		sel_CZN_src_RF, sel_CZN_src_ALU, ld_TR,
 					
 		sel_RF_write_src_ALU, sel_RF_write_src_reg1, MEM_read, MEM_write;
 
@@ -62,7 +62,7 @@ module Controller(
 		ld_PC = 0; cen_PC = 0; ld_IR = 0; ld_DI = 0; ld_ALU = 0; write_en_rf = 0; sel_IR_3_2 = 0; 
 		sel_DI_4_3 = 0; sel_RF_write_src_TR_12_5 = 0; write_reg_en = 0; sel_MEM_src_TR = 0;
 		sel_MEM_src_PC = 0; sel_ALU_src_reg1 = 0; sel_ALU_src_TR = 0; ld_CZN = 0;
-		sel_CZN_src_RF = 0; sel_CZN_src_ALU = 0; sel_PC_src_JUMP = 0; ld_TR = 0;
+		sel_CZN_src_RF = 0; sel_CZN_src_ALU = 0; ld_TR = 0;
 		sel_RF_write_src_ALU = 0; sel_RF_write_src_reg1 = 0; MEM_read = 0; MEM_write = 0;
 
 		case(ps)
@@ -75,8 +75,6 @@ module Controller(
 
 				// Inc PC
 				ld_PC = 1;
-				sel_PC_src_JUMP = 0;
-
 			end
 
 			`CONTROLLER_LDI : begin

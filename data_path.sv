@@ -38,9 +38,9 @@ module data_path(clk, rst);
 
 		.sel_MEM_src_PC(sel_MEM_src_PC), .sel_ALU_src_reg1(sel_ALU_src_reg1), .sel_ALU_src_reg1(sel_ALU_src_reg1),
 
-		.sel_ALU_src_TR(sel_ALU_src_TR), .ld_CZN(ld_CZN), .sel_CZN_src_RF(sel_CZN_src_RF), .sel_CZN_src_ALU(sel_CZN_src_ALU),
-		
-		.sel_PC_src_JUMP(sel_PC_src_JUMP), .ld_TR(ld_TR), .sel_RF_write_src_ALU(sel_RF_write_src_ALU),
+		.sel_ALU_src_TR(sel_ALU_src_TR), .ld_CZN(ld_CZN), .sel_CZN_src_RF(sel_CZN_src_RF),
+
+		.ld_TR(ld_TR), .sel_RF_write_src_ALU(sel_RF_write_src_ALU),  .sel_CZN_src_ALU(sel_CZN_src_ALU),
 
 		.sel_RF_write_src_reg1(sel_RF_write_src_reg1), .MEM_read(MEM_read), .MEM_write(MEM_write)
 
