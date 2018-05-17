@@ -72,14 +72,30 @@ module Controller(
 			`CONTROLLER_IF2 : begin
 				case(instruction[3:1])
 
-					`LDA_OP : ns = `CONTROLLER_IF2;
-					`STA_OP : ns = `CONTROLLER_IF2;
-					`ADA_OP : ns = `CONTROLLER_IF2;
-					`ANA_OP : ns = `CONTROLLER_IF2;
-					`JMP_OP : ns = `CONTROLLER_IF2;
+					`LDA_OP : ns = `CONTROLLER_LD_MEM;
+					`ADA_OP : ns = `CONTROLLER_LD_MEM;
+					`ANA_OP : ns = `CONTROLLER_LD_MEM;
+					`JMP_OP : ns = `CONTROLLER_JMP;
+					`STA_OP : ns = `CONTROLLER_STA;
 
 				endcase
 			end
+
+			`CONTROLLER_JMP : ns = `CONTROLLER_IF;
+			
+			`CONTROLLER_LD_MEM : begin
+				case(instruction[3:1])
+
+					`LDA_OP : ns = `CONTROLLER_LDA;
+					`ADA_OP : ns = `CONTROLLER_LD_MEM;
+					`ANA_OP : ns = `CONTROLLER_LD_MEM;
+					`JMP_OP : ns = `CONTROLLER_JMP;
+					`STA_OP : ns = `CONTROLLER_STA;
+
+				endcase
+			end
+
+			`CONTROLLER_LDA : ns = `CONTROLLER_IF;
 
 		endcase // ps
 	end
@@ -118,6 +134,8 @@ module Controller(
 				sel_IR_3_2 = 1;
 				ld_CZN = 1;
 				sel_CZN_src_ALU = 1;
+				// ld_CZN = 1;
+				// sel_CZN_src_RF = 1;
 			end
 
 			`CONTROLLER_RTYPE : begin
@@ -143,6 +161,27 @@ module Controller(
 				ld_PC = 1;
 				sel_PC_src_jump = 0;
 			end
+
+			`CONTROLLER_JMP : begin
+				if (out_jump_sel) begin
+					ld_PC = 1;
+					sel_PC_src_jump = 1;
+				end
+			end
+
+			`CONTROLLER_LD_MEM : begin
+				sel_MEM_src_TR = 1;
+				MEM_read = 1;
+				ld_TR = 1;
+			end
+			`CONTROLLER_LDA : begin
+				sel_DI_4_3 = 1;
+				sel_RF_write_src_TR_12_5 = 1;
+				write_en_rf = 1;
+				ld_CZN = 1;
+				sel_CZN_src_RF = 1;
+			end
+
 		endcase // ps
 	end
 
