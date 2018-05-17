@@ -18,7 +18,9 @@ module Controller(
 	);
 
 	input clk, rst, out_jump_sel;
+	
 	input [3:0] instruction;
+	
 	output logic ld_PC, cen_PC, ld_IR, ld_DI, ld_ALU, write_en_rf, sel_IR_3_2, 
 		
 		sel_DI_4_3, sel_RF_write_src_TR_12_5, write_reg_en, sel_MEM_src_TR, 
@@ -32,7 +34,9 @@ module Controller(
 	logic [3:0] ps, ns;
 
 
-	always @(posedge clk, posedge rst) 
+//	always @(posedge clk, posedge rst) 
+	always @(ps) 
+
     begin : TRANSITION_DECIDE
 		ns = `CONTROLLER_IF;	
       
@@ -49,15 +53,8 @@ module Controller(
 		endcase // ps
 	end
 
-	always @(posedge clk, posedge rst)
-	begin : TRANSITION_APPLY
-		if(rst)
-			ps <= `CONTROLLER_IF;
-		else
-			ps <= ns;
-	end
-
-	always @(posedge clk, posedge rst)
+//	always @(posedge clk, posedge rst)
+	always @(ps)
 	begin
 		ld_PC = 0; cen_PC = 0; ld_IR = 0; ld_DI = 0; ld_ALU = 0; write_en_rf = 0; sel_IR_3_2 = 0; 
 		sel_DI_4_3 = 0; sel_RF_write_src_TR_12_5 = 0; write_reg_en = 0; sel_MEM_src_TR = 0;
@@ -92,4 +89,13 @@ module Controller(
 		endcase // ps
 	end
 
+	always @(posedge clk, posedge rst)
+	begin : TRANSITION_APPLY
+		if(rst)
+			ps <= `CONTROLLER_IF;
+		else
+			ps <= ns;
+	end
+	
+	
 endmodule // Controller

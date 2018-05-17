@@ -44,7 +44,7 @@ module data_path(clk, rst);
 
 		.ld_TR(ld_TR), .sel_RF_write_src_ALU(sel_RF_write_src_ALU),  .sel_CZN_src_ALU(sel_CZN_src_ALU),
 
-		.sel_RF_write_src_reg1(sel_RF_write_src_reg1), .MEM_read(MEM_read), .MEM_write(MEM_write)
+		.sel_RF_write_src_reg1(sel_RF_write_src_reg1), .MEM_read(MEM_read), .MEM_write(MEM_write),
 
 		.out_jump_sel(sel_PC_src_JUMP), .sel_PC_src_jump(out_jump_sel)
 	);
