@@ -34,17 +34,16 @@ module Controller(
 	logic [3:0] ps, ns;
 
 
-//	always @(posedge clk, posedge rst) 
-	always @(ps) 
-
+	always @(instruction) 
     begin : TRANSITION_DECIDE
 		ns = `CONTROLLER_IF;	
       
 		case(ps)
+			`CONTROLLER_LDI : ns = `CONTROLLER_Decode;
 
-			`CONTROLLER_IF : begin
+			`CONTROLLER_Decode : begin
 				if (instruction[3:1] == `LDI_OP) ns = `CONTROLLER_LDI;
-				if (instruction[3:0] == `MVR_OP) ns = `CONTROLLER_MVR;
+				esle if (instruction[3:0] == `MVR_OP) ns = `CONTROLLER_MVR;
 			end
 
 			`CONTROLLER_LDI : ns = `CONTROLLER_IF;
@@ -53,7 +52,6 @@ module Controller(
 		endcase // ps
 	end
 
-//	always @(posedge clk, posedge rst)
 	always @(ps)
 	begin
 		ld_PC = 0; cen_PC = 0; ld_IR = 0; ld_DI = 0; ld_ALU = 0; write_en_rf = 0; sel_IR_3_2 = 0; 
@@ -74,6 +72,10 @@ module Controller(
 				ld_PC = 1;
 				sel_PC_src_jump = 0;
 			end
+
+			`CONTROLLER_Decode : begin
+			end
+
 
 			`CONTROLLER_LDI : begin
 				ld_DI = 1;

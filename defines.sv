@@ -27,5 +27,8 @@
 //Controller States
 
 `define CONTROLLER_IF 		4'd1
-`define CONTROLLER_LDI 		4'd2
-`define CONTROLLER_MVR 		4'd3
+`define CONTROLLER_Decode 	4'd2
+
+`define CONTROLLER_LDI 		4'd3
+`define CONTROLLER_MVR 		4'd4
+`define CONTROLLER_MVR 		4'd5
