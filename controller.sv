@@ -82,6 +82,7 @@ module Controller(
 			end
 
 			`CONTROLLER_JMP : ns = `CONTROLLER_IF;
+			`CONTROLLER_STA : ns = `CONTROLLER_IF;
 			
 			`CONTROLLER_LD_MEM : begin
 				case(instruction[3:1])
@@ -89,8 +90,6 @@ module Controller(
 					`LDA_OP : ns = `CONTROLLER_LDA;
 					`ADA_OP : ns = `CONTROLLER_LD_MEM;
 					`ANA_OP : ns = `CONTROLLER_LD_MEM;
-					`JMP_OP : ns = `CONTROLLER_JMP;
-					`STA_OP : ns = `CONTROLLER_STA;
 
 				endcase
 			end
@@ -165,6 +164,12 @@ module Controller(
 					ld_PC = 1;
 					sel_PC_src_jump = 1;
 				end
+			end
+
+			`CONTROLLER_STA : begin
+				sel_DI_4_3 = 1;
+				sel_MEM_src_TR = 1;
+				MEM_write = 1;
 			end
 
 			`CONTROLLER_LD_MEM : begin
