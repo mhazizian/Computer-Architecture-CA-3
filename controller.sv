@@ -132,8 +132,6 @@ module Controller(
 				sel_RF_write_src_reg1 = 1;
 				write_en_rf = 1;
 				sel_IR_3_2 = 1;
-				ld_CZN = 1;
-				sel_CZN_src_ALU = 1;
 				// ld_CZN = 1;
 				// sel_CZN_src_RF = 1;
 			end
