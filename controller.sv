@@ -39,7 +39,7 @@ module Controller(
 		ns = `CONTROLLER_IF;	
       
 		case(ps)
-			`CONTROLLER_LDI : ns = `CONTROLLER_Decode;
+			`CONTROLLER_IF : ns = `CONTROLLER_Decode;
 
 			`CONTROLLER_Decode : begin
 				if (instruction[3:1] == `LDI_OP) ns = `CONTROLLER_LDI;
