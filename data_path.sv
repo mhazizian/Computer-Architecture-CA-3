@@ -25,6 +25,26 @@ module data_path(clk, rst);
 	logic [2:0] out_CZN, CZN_from_ALU, CZN_from_RF, out_mux_src_CZN;
 	
 	logic [1:0] out_mux_dst_src, ALU_OP;
+
+	Controller controller
+	(
+		.clk(clk), .rst(rst), .instruction(out_IR[7:4]),
+
+		.ld_PC(ld_PC), .cen_PC(cen_PC), .ld_IR(ld_IR), .ld_DI(ld_DI),
+
+		.ld_ALU(ld_ALU), .write_en_rf(write_en_rf), .sel_IR_3_2(sel_IR_3_2), .sel_IR_4_3(sel_IR_4_3),
+
+		.sel_RF_write_src_TR_12_5(sel_RF_write_src_TR_12_5), .write_reg_en(write_reg_en), .sel_MEM_src_TR(sel_MEM_src_TR),
+
+		.sel_MEM_src_PC(sel_MEM_src_PC), .sel_ALU_src_reg1(sel_ALU_src_reg1), .sel_ALU_src_reg1(sel_ALU_src_reg1),
+
+		.sel_ALU_src_TR(sel_ALU_src_TR), .ld_CZN(ld_CZN), .sel_CZN_src_RF(sel_CZN_src_RF), .sel_CZN_src_ALU(sel_CZN_src_ALU),
+		
+		.sel_PC_src_JUMP(sel_PC_src_JUMP), .ld_TR(ld_TR), .sel_RF_write_src_ALU(sel_RF_write_src_ALU),
+
+		.sel_RF_write_src_reg1(sel_RF_write_src_reg1), .MEM_read(MEM_read), .MEM_write(MEM_write)
+
+	);
 	
 	
 	// PC
