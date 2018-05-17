@@ -7,7 +7,7 @@ module Controller(
 
 		ld_PC, cen_PC, ld_IR, ld_DI, ld_ALU, write_en_rf, sel_IR_3_2, 
 		
-		sel_DI_4_3, sel_RF_write_src_TR_12_5, write_reg_en, sel_MEM_src_TR, 
+		sel_DI_4_3, sel_RF_write_src_TR_12_5, sel_MEM_src_TR, 
 				
 		sel_MEM_src_PC, sel_ALU_src_reg1, sel_ALU_src_TR, ld_CZN,
 				
@@ -23,7 +23,7 @@ module Controller(
 	
 	output logic ld_PC, cen_PC, ld_IR, ld_DI, ld_ALU, write_en_rf, sel_IR_3_2, 
 		
-		sel_DI_4_3, sel_RF_write_src_TR_12_5, write_reg_en, sel_MEM_src_TR, 
+		sel_DI_4_3, sel_RF_write_src_TR_12_5, sel_MEM_src_TR, 
 				
 		sel_MEM_src_PC, sel_ALU_src_reg1, sel_ALU_src_TR, ld_CZN,
 				
@@ -91,7 +91,7 @@ module Controller(
 			`CONTROLLER_MVR : begin
 				sel_RF_write_src_reg1 = 1;
 				write_en_rf = 1;
-				sel_DI_4_3 = 1;
+				sel_IR_3_2 = 1;
 				ld_CZN = 1;
 				sel_CZN_src_ALU = 1;
 			end

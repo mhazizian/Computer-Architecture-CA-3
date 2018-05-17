@@ -4,7 +4,7 @@ module data_path(clk, rst);
 
 	logic ld_PC, cen_PC, ld_IR, ld_DI, ld_ALU, write_en_rf, sel_IR_3_2, 
 	
-				sel_DI_4_3, sel_RF_write_src_TR_12_5, write_reg_en, sel_MEM_src_TR, 
+				sel_DI_4_3, sel_RF_write_src_TR_12_5, sel_MEM_src_TR, 
 			
 				sel_MEM_src_PC, sel_ALU_src_reg1, sel_ALU_src_TR, ld_CZN,
 			
@@ -36,7 +36,7 @@ module data_path(clk, rst);
 
 		.ld_ALU(ld_ALU), .write_en_rf(write_en_rf), .sel_IR_3_2(sel_IR_3_2), .sel_DI_4_3(sel_DI_4_3),
 
-		.sel_RF_write_src_TR_12_5(sel_RF_write_src_TR_12_5), .write_reg_en(write_reg_en), .sel_MEM_src_TR(sel_MEM_src_TR),
+		.sel_RF_write_src_TR_12_5(sel_RF_write_src_TR_12_5), .sel_MEM_src_TR(sel_MEM_src_TR),
 
 		.sel_MEM_src_PC(sel_MEM_src_PC), .sel_ALU_src_reg1(sel_ALU_src_reg1),
 
@@ -104,7 +104,7 @@ module data_path(clk, rst);
 	
 	register_file RF(.clk(clk), .rst(rst), .write_reg(out_mux_dst_src), .write_data(out_mux_write_data),
 	
-				.write_reg_en(write_reg_en), .read_reg1(out_IR[1:0]), .read_reg2(out_mux_dst_src), 
+				.write_reg_en(write_en_rf), .read_reg1(out_IR[1:0]), .read_reg2(out_mux_dst_src), 
 			
 				.read_data1(out_reg1), .read_data2(out_reg2), .CZN_from_RF(CZN_from_RF));
 
