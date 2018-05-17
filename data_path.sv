@@ -10,7 +10,9 @@ module data_path(clk, rst);
 			
 				sel_CZN_src_RF, sel_CZN_src_ALU, sel_PC_src_JUMP, ld_TR,
 				
-				sel_RF_write_src_ALU, sel_RF_write_src_reg1, MEM_read, MEM_write;
+				sel_RF_write_src_ALU, sel_RF_write_src_reg1, MEM_read, MEM_write,
+				
+				out_jump_sel;
 	
 	
 	logic [12:0] out_TR, out_PC, out_mux_src_adr, out_PC_plus1, out_mux_src_pc;
@@ -44,6 +46,7 @@ module data_path(clk, rst);
 
 		.sel_RF_write_src_reg1(sel_RF_write_src_reg1), .MEM_read(MEM_read), .MEM_write(MEM_write)
 
+		.out_jump_sel(sel_PC_src_JUMP), .sel_PC_src_jump(out_jump_sel)
 	);
 	
 	
@@ -55,7 +58,7 @@ module data_path(clk, rst);
 	
 	incrementer #(.WORD_LENGTH(13)) pc_incrementer(.in(out_PC), .out(out_PC_plus1));
 	
-	mux_2_to_1 #(.WORD_LENGTH(13)) mux_pc(.sel_first(sel_PC_src_JUMP), .sel_second(~sel_PC_src_JUMP), 
+	mux_2_to_1 #(.WORD_LENGTH(13)) mux_pc(.sel_first(out_jump_sel), .sel_second(~out_jump_sel), 
 	
 				.first(out_TR), .second(out_PC_plus1), .out(out_mux_src_pc));
 		
