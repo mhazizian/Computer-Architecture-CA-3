@@ -43,7 +43,7 @@ module Controller(
 
 			`CONTROLLER_Decode : begin
 				if (instruction[3:1] == `LDI_OP) ns = `CONTROLLER_LDI;
-				esle if (instruction[3:0] == `MVR_OP) ns = `CONTROLLER_MVR;
+				else if (instruction[3:0] == `MVR_OP) ns = `CONTROLLER_MVR;
 			end
 
 			`CONTROLLER_LDI : ns = `CONTROLLER_IF;
