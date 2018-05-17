@@ -4,7 +4,7 @@ module test_bench();
 	
 	data_path dp(clk, rst);
 	
-	initial repeat(50) #200 clk = ~clk;
+	initial repeat(500) #200 clk = ~clk;
 	
 	initial begin
 		#100

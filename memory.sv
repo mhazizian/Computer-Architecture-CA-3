@@ -65,35 +65,35 @@ module memory(rst, address, command, write_data, mem_read, mem_write);
 
 
 		// 8th num
-		command_memory[3]	<=	{3'b010, 5'b00011};				// ADA {OPCODE, ADR[12:8]}
-		command_memory[4]	<=	{8'b11101111};					// ADA {OPCODE, ADR[7:0]} // ADR = 1007
+		command_memory[21]	<=	{3'b010, 5'b00011};				// ADA {OPCODE, ADR[12:8]}
+		command_memory[22]	<=	{8'b11101111};					// ADA {OPCODE, ADR[7:0]} // ADR = 1007
 
-		command_memory[5]	<=	{4'b1001, 2'b01, 2'b00};		// ADR {OPCODE, DEST, SRC}
+		command_memory[23]	<=	{4'b1001, 2'b01, 2'b00};		// ADR {OPCODE, DEST, SRC}
 
 
 		// 9th num
-		command_memory[3]	<=	{3'b010, 5'b00011};				// ADA {OPCODE, ADR[12:8]}
-		command_memory[4]	<=	{8'b11110000};					// ADA {OPCODE, ADR[7:0]} // ADR = 1008
+		command_memory[24]	<=	{3'b010, 5'b00011};				// ADA {OPCODE, ADR[12:8]}
+		command_memory[25]	<=	{8'b11110000};					// ADA {OPCODE, ADR[7:0]} // ADR = 1008
 
-		command_memory[5]	<=	{4'b1001, 2'b01, 2'b00};		// ADR {OPCODE, DEST, SRC}
+		command_memory[26]	<=	{4'b1001, 2'b01, 2'b00};		// ADR {OPCODE, DEST, SRC}
 
 
 		// 10th num
-		command_memory[3]	<=	{3'b010, 5'b00011};				// ADA {OPCODE, ADR[12:8]}
-		command_memory[4]	<=	{8'b11110001};					// ADA {OPCODE, ADR[7:0]} // ADR = 1009
+		command_memory[27]	<=	{3'b010, 5'b00011};				// ADA {OPCODE, ADR[12:8]}
+		command_memory[28]	<=	{8'b11110001};					// ADA {OPCODE, ADR[7:0]} // ADR = 1009
 
-		command_memory[5]	<=	{4'b1001, 2'b01, 2'b00};		// ADR {OPCODE, DEST, SRC}
+		command_memory[29]	<=	{4'b1001, 2'b01, 2'b00};		// ADR {OPCODE, DEST, SRC}
 
 
 		// store result on ADR = 2000 and ADR = 2001
 
-		command_memory[13]	<=	{3'b001, 5'b00111};				// STA {OPCODE, ADR[12:8]}
-		command_memory[14]	<=	{8'b11010000};					// STA {OPCODE, ADR[7:0]} // ADR = 2000
+		command_memory[30]	<=	{3'b001, 5'b00111};				// STA {OPCODE, ADR[12:8]}
+		command_memory[31]	<=	{8'b11010000};					// STA {OPCODE, ADR[7:0]} // ADR = 2000
 
-		command_memory[0] 	<=	{3'b111, 2'b01, 2'b00, 1'b1}; 	// LDI {OPCODE, ADDRESS_OP, JUMP_OP, DONT_CARE}
+		command_memory[32] 	<=	{3'b111, 2'b01, 2'b00, 1'b1}; 	// LDI {OPCODE, ADDRESS_OP, JUMP_OP, DONT_CARE}
 
-		command_memory[13]	<=	{3'b001, 5'b00111};				// STA {OPCODE, ADR[12:8]}
-		command_memory[14]	<=	{8'b11010001};					// STA {OPCODE, ADR[7:0]} // ADR = 2001
+		command_memory[33]	<=	{3'b001, 5'b00111};				// STA {OPCODE, ADR[12:8]}
+		command_memory[34]	<=	{8'b11010001};					// STA {OPCODE, ADR[7:0]} // ADR = 2001
 
 		// Numbers:
 		command_memory[1000] <= 	8'd5;
@@ -107,45 +107,38 @@ module memory(rst, address, command, write_data, mem_read, mem_write);
 		command_memory[1008] <= 	8'd110;
 		command_memory[1009] <= 	8'd15;
 
-/*
+		/*
+		
 		command_memory 		<= '{default : 8'b0};
-		command_memory[0] 	<=	{3'b111, 2'b11, 2'b00, 1'b1}; 	// LDI {OPCODE, ADDRESS_OP, JUMP_OP, DONT_CARE}
-		command_memory[1]	<= 	{4'b1000, 2'b10, 2'b00};		// MVR {OPCODE, DEST, SRC}
-		command_memory[2]	<=	{4'b1011, 2'b11, 2'b00};		// ORR {OPCODE, DEST, SRC}
-		command_memory[3]	<=	{3'b110, 5'b0};					// JMP {OPCODE, ADR[12:8]} // ADR = 10
-		command_memory[4]	<=	{8'b00001010};					// JMP {OPCODE, ADR[7:0]}
-		command_memory[10]	<=	{4'b1001, 2'b11, 2'b10};		// ADR {OPCODE, DEST, SRC}
-		
-		command_memory[11]	<=	{3'b000, 5'b0};					// LDA {OPCODE, ADR[12:8]}
-		command_memory[12]	<=	{8'b01111111};					// LDA {OPCODE, ADR[7:0]} // ADR = 127
-		
-//		command_memory[13]	<=	{3'b001, 5'b0};					// STA {OPCODE, ADR[12:8]}
-//		command_memory[14]	<=	{8'b11111111};					// STA {OPCODE, ADR[7:0]} // ADR = 255
-		
-		command_memory[13]	<=	{8'b11100111};					// STA {OPCODE, ADR[12:8]}
-		command_memory[14]	<=	{8'b11111111};					// STA {OPCODE, ADR[7:0]} // ADR = 255
-
-	
-		command_memory[127] <= 	8'b10101010;					// DATA
-*/	
-
-
 		command_memory[0] 	<=	{3'b111, 2'b11, 2'b00, 1'b1}; 	// LDI {OPCODE, ADDRESS_OP, JUMP_OP, DONT_CARE}
 		
 		command_memory[1]	<=	{3'b000, 5'b0};					// LDA {OPCODE, ADR[12:8]}
 		command_memory[2]	<=	{8'b01111111};					// LDA {OPCODE, ADR[7:0]} // ADR = 127
 		
-//		command_memory[13]	<=	{3'b001, 5'b0};					// STA {OPCODE, ADR[12:8]}
-//		command_memory[14]	<=	{8'b11111111};					// STA {OPCODE, ADR[7:0]} // ADR = 255
+		command_memory[3]	<= 	{4'b1000, 2'b10, 2'b11};		// MVR {OPCODE, DEST, SRC}
+		command_memory[4]	<=	{4'b1011, 2'b00, 2'b10};		// ORR {OPCODE, DEST, SRC}
 		
-		command_memory[3]	<=	{3'b001, 5'b0};					// STA {OPCODE, ADR[12:8]}
-		command_memory[4]	<=	{8'b11111111};					// STA {OPCODE, ADR[7:0]} // ADR = 255
+		command_memory[5]	<=	{3'b110, 5'b0};					// JMP {OPCODE, ADR[12:8]} // ADR = 10
+		command_memory[6]	<=	{8'b00001010};					// JMP {OPCODE, ADR[7:0]}
+		
+		command_memory[10]	<=	{4'b1001, 2'b11, 2'b10};		// ADR {OPCODE, DEST, SRC}
+		
+		command_memory[11] 	<=	{3'b111, 2'b11, 2'b00, 1'b1}; 	// LDI {OPCODE, ADDRESS_OP, JUMP_OP, DONT_CARE}
+		
+		command_memory[12]	<=	{3'b001, 5'b0};					// STA {OPCODE, ADR[12:8]}
+		command_memory[13]	<=	{8'b11111111};					// STA {OPCODE, ADR[7:0]} // ADR = 255
 	
-		command_memory[5]	<=	{3'b011, 5'b0};					// ADA {OPCODE, ADR[12:8]}
-		command_memory[6]	<=	{8'b11111111};	 				// ADA {OPCODE, ADR[7:0]} // ADR = 255 // R[3] = 14
+		command_memory[14] 	<=	{3'b111, 2'b00, 2'b00, 1'b1}; 	// LDI {OPCODE, ADDRESS_OP, JUMP_OP, DONT_CARE}
+	
+		command_memory[15]	<=	{3'b011, 5'b0};					// ANA {OPCODE, ADR[12:8]}
+		command_memory[16]	<=	{8'b11111111};	 				// ANA {OPCODE, ADR[7:0]} // ADR = 255
+
+		command_memory[17]	<=	{3'b010, 5'b0};					// ADA {OPCODE, ADR[12:8]}
+		command_memory[18]	<=	{8'b11111111};	 				// ADA {OPCODE, ADR[7:0]} // ADR = 255
 		
-//		command_memory[5]	<=	{3'b010, 5'b0};					// ADA {OPCODE, ADR[12:8]}
-//		command_memory[6]	<=	{8'b11111111};	 				// ADA {OPCODE, ADR[7:0]} // ADR = 255 // R[3] = 60
+		command_memory[127] <= 	8'b00011110;					// DATA
+		
+		*/
 	
 		
 
