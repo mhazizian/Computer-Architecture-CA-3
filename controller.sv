@@ -42,13 +42,25 @@ module Controller(
 			`CONTROLLER_IF : ns = `CONTROLLER_Decode;
 
 			`CONTROLLER_Decode : begin
-				if (instruction[3:1] == `LDI_OP) ns = `CONTROLLER_LDI;
-				else if (instruction[3:0] == `MVR_OP) ns = `CONTROLLER_MVR;
-				else if (
-					instruction[3:0] == `ADR_OP |
-					instruction[3:0] == `ANR_OP |
-					instruction[3:0] == `ORR_OP
-				) ns = `CONTROLLER_RTYPE;
+				case(instruction[3:1])
+					`LDI_OP : ns = `CONTROLLER_LDI;
+
+					`LDA_OP : ns = `CONTROLLER_IF2;
+					`STA_OP : ns = `CONTROLLER_IF2;
+					`ADA_OP : ns = `CONTROLLER_IF2;
+					`ANA_OP : ns = `CONTROLLER_IF2;
+					`JMP_OP : ns = `CONTROLLER_IF2;
+
+				endcase
+
+				case(instruction[3:0])
+					`MVR_OP : ns = `CONTROLLER_MVR;
+
+					`ADR_OP : ns = `CONTROLLER_RTYPE;
+					`ANR_OP : ns = `CONTROLLER_RTYPE;
+					`ORR_OP : ns = `CONTROLLER_RTYPE;
+
+				endcase
 			end
 
 			`CONTROLLER_LDI : ns = `CONTROLLER_IF;
@@ -56,6 +68,18 @@ module Controller(
 
 			`CONTROLLER_RTYPE : ns = `CONTROLLER_RTYPE_T;
 			`CONTROLLER_RTYPE_T: ns = `CONTROLLER_IF;
+
+			`CONTROLLER_IF2 : begin
+				case(instruction[3:1])
+
+					`LDA_OP : ns = `CONTROLLER_IF2;
+					`STA_OP : ns = `CONTROLLER_IF2;
+					`ADA_OP : ns = `CONTROLLER_IF2;
+					`ANA_OP : ns = `CONTROLLER_IF2;
+					`JMP_OP : ns = `CONTROLLER_IF2;
+
+				endcase
+			end
 
 		endcase // ps
 	end
@@ -107,6 +131,17 @@ module Controller(
 			`CONTROLLER_RTYPE_T : begin
 				sel_RF_write_src_ALU = 1;
 				write_en_rf = 1;
+			end
+
+			`CONTROLLER_IF2 : begin
+				// Set TR
+				ld_TR = 1;
+				sel_MEM_src_PC = 1;
+				MEM_read = 1;
+
+				// Inc PC
+				ld_PC = 1;
+				sel_PC_src_jump = 0;
 			end
 		endcase // ps
 	end
