@@ -4,7 +4,7 @@ module data_path(clk, rst);
 
 	logic ld_PC, cen_PC, ld_IR, ld_DI, ld_ALU, write_en_rf, sel_IR_3_2, 
 	
-				sel_DI_4_3, sel_RF_write_src_TR_12_5, sel_MEM_src_TR, 
+				sel_DI_4_3, sel_RF_write_src_TR_7_0, sel_MEM_src_TR, 
 			
 				sel_MEM_src_PC, sel_ALU_src_reg1, sel_ALU_src_TR, ld_CZN,
 			
@@ -36,7 +36,7 @@ module data_path(clk, rst);
 
 		.ld_ALU(ld_ALU), .write_en_rf(write_en_rf), .sel_IR_3_2(sel_IR_3_2), .sel_DI_4_3(sel_DI_4_3),
 
-		.sel_RF_write_src_TR_12_5(sel_RF_write_src_TR_12_5), .sel_MEM_src_TR(sel_MEM_src_TR),
+		.sel_RF_write_src_TR_7_0(sel_RF_write_src_TR_7_0), .sel_MEM_src_TR(sel_MEM_src_TR),
 
 		.sel_MEM_src_PC(sel_MEM_src_PC), .sel_ALU_src_reg1(sel_ALU_src_reg1),
 
@@ -75,7 +75,7 @@ module data_path(clk, rst);
 	
 	// 13 bit for TR
 	
-	register #(.WORD_LENGTH(13)) TR(.clk(clk), .rst(rst), .in({out_MEM, out_IR[4:0]}), .out(out_TR), .ld(ld_TR));
+	register #(.WORD_LENGTH(13)) TR(.clk(clk), .rst(rst), .in({out_IR[4:0], out_MEM}), .out(out_TR), .ld(ld_TR));
 	
 
 	// 	8 bit for IR
@@ -95,9 +95,9 @@ module data_path(clk, rst);
 				.first(out_IR[3:2]), .second(out_DI[4:3]), .out(out_mux_dst_src));
 	
 	
-	mux_3_to_1 #(.WORD_LENGTH(8)) mux_write_data_rf(.first(out_TR[12:5]) , 
+	mux_3_to_1 #(.WORD_LENGTH(8)) mux_write_data_rf(.first(out_TR[7:0]) , 
 	
-				.second(out_reg1), .third(out_ALU_reg), .sel_first(sel_RF_write_src_TR_12_5), 
+				.second(out_reg1), .third(out_ALU_reg), .sel_first(sel_RF_write_src_TR_7_0), 
 				
 				.sel_second(sel_RF_write_src_reg1), .sel_third(sel_RF_write_src_ALU), .out(out_mux_write_data));
 		

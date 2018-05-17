@@ -14,8 +14,16 @@ module ALU(alu_in1, alu_in2, c_in, opcode, alu_out, CZN_from_ALU);
 	always @(*) begin
 		case(opcode)
 			`ADD_FN:		{CZN_from_ALU[0], alu_out} <= alu_in1 + alu_in2 + c_in;
-			`AND_FN:		alu_out <= alu_in1 & alu_in2;
-			`OR_FN:			alu_out <= alu_in1 | alu_in2;
+			`AND_FN:		
+			begin
+				CZN_from_ALU[0] = 0;
+				alu_out <= alu_in1 & alu_in2;
+			end
+			`OR_FN:
+			begin
+				CZN_from_ALU[0] = 0;
+				alu_out <= alu_in1 | alu_in2;
+			end
 		endcase
 		
 	end

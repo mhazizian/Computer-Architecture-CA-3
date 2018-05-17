@@ -19,10 +19,13 @@ module register_file(
 	
 //	Set CZN flags
 
+	assign CZN_from_RF[0] = 0;
 	assign CZN_from_RF[1] = (write_data == 8'b0 ? 1 : 0);
 	assign CZN_from_RF[2] = (write_data < 0);
 	
 // Generate 4 regsiters
+	
+//	register #(.WORD_LENGTH(8)) TEST(.clk(clk), .rst(rst), .ld(1'b1), .in(8'd7), .out(acc[0]));
 	
 	generate for (i = 0; i < 4; i = i + 1)
 		begin
@@ -39,7 +42,7 @@ module register_file(
 
 // Write regsiter on posedge of clock
 	
-	always @(posedge clk) begin
+	always @(posedge clk, write_reg_en, write_reg) begin
 		for ( j = 0; j < 4; j = j + 1)	ld_reg[j] = 1'b0;
 		if (write_reg_en)	ld_reg[write_reg] = 1'b1;
 	end
