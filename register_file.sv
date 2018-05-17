@@ -35,7 +35,7 @@ module register_file(
 
 // Read registers on posedge of clock
 	
-	always @(posedge clk) begin
+	always @(posedge clk, read_reg1, read_reg2) begin
 		read_data1 = acc[read_reg1];
 		read_data2 = acc[read_reg2];
 	end

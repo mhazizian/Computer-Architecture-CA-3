@@ -65,7 +65,7 @@ module data_path(clk, rst);
 	
 	// Memory
 
-	memory memory(.rst(rst), .address(out_mux_src_adr), .command(out_MEM), .write_data(out_reg2), .mem_read(MEM_read), .mem_writer(MEM_write));
+	memory memory(.rst(rst), .address(out_mux_src_adr), .command(out_MEM), .write_data(out_reg2), .mem_read(MEM_read), .mem_write(MEM_write));
 	
 	
 	mux_2_to_1 #(.WORD_LENGTH(13)) mux_memory(.sel_first(sel_MEM_src_TR), .sel_second(sel_MEM_src_PC), 

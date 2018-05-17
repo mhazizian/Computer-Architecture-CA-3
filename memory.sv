@@ -1,14 +1,14 @@
-module memory(rst, address, command, write_data, mem_read, mem_writer);
+module memory(rst, address, command, write_data, mem_read, mem_write);
 
 	input [12:0] address;
 	input [7:0] write_data;
-	input  mem_read, mem_writer;
+	input  mem_read, mem_write;
 	input rst;
 	output logic[7:0] command;
 	
 	reg[7:0] command_memory[0:8191];
 
-	always @(*)	begin
+	always @(address, mem_write)	begin
 		if (write_data)
 			command_memory[address] <= write_data;
 	end
@@ -46,15 +46,17 @@ module memory(rst, address, command, write_data, mem_read, mem_writer);
 //		command_memory[13]	<=	{3'b001, 5'b0};					// STA {OPCODE, ADR[12:8]}
 //		command_memory[14]	<=	{8'b11111111};					// STA {OPCODE, ADR[7:0]} // ADR = 255
 		
-//		command_memory[13]	<=	{8'b11100111};					// STA {OPCODE, ADR[12:8]}
-//		command_memory[14]	<=	{8'b11111111};					// STA {OPCODE, ADR[7:0]} // ADR = 255
-
+		command_memory[3]	<=	{3'b001, 5'b0};					// STA {OPCODE, ADR[12:8]}
+		command_memory[4]	<=	{8'b11111111};					// STA {OPCODE, ADR[7:0]} // ADR = 255
 	
-		command_memory[127] <= 	8'b10101010;					// DATA
+		command_memory[5]	<=	{3'b010, 5'b0};					// ADA {OPCODE, ADR[12:8]}
+		command_memory[6]	<=	{8'b11111111};	 				// ADA {OPCODE, ADR[7:0]} // ADR = 255 // R[3] = 14S
+	
+		command_memory[127] <= 	8'b00000111;					// DATA
 
 	end
 	
-	always @(address) begin
+	always @(address, mem_read) begin
 		if (mem_read)
 			command <= command_memory[address];
 	end
