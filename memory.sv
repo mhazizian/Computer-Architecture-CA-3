@@ -26,63 +26,63 @@ module memory(rst, address, command, write_data, mem_read, mem_write);
 		command_memory[3]	<=	{3'b010, 5'b00011};				// ADA {OPCODE, ADR[12:8]}
 		command_memory[4]	<=	{8'b11101001};					// ADA {OPCODE, ADR[7:0]} // ADR = 1001
 
-		command_memory[5]	<=	{4'b1001, 2'b01, 2'b00};		// ADR {OPCODE, DEST, SRC}
+		command_memory[5]	<=	{4'b1001, 2'b01, 2'b11};		// ADR {OPCODE, DEST, SRC}
 
 
 		// third num
 		command_memory[6]	<=	{3'b010, 5'b00011};				// ADA {OPCODE, ADR[12:8]}
 		command_memory[7]	<=	{8'b11101010};					// ADA {OPCODE, ADR[7:0]} // ADR = 1002
 
-		command_memory[8]	<=	{4'b1001, 2'b01, 2'b00};		// ADR {OPCODE, DEST, SRC}
+		command_memory[8]	<=	{4'b1001, 2'b01, 2'b11};		// ADR {OPCODE, DEST, SRC}
 
 
 		// 4th num
 		command_memory[9]	<=	{3'b010, 5'b00011};				// ADA {OPCODE, ADR[12:8]}
 		command_memory[10]	<=	{8'b11101011};					// ADA {OPCODE, ADR[7:0]} // ADR = 1003
 
-		command_memory[11]	<=	{4'b1001, 2'b01, 2'b00};		// ADR {OPCODE, DEST, SRC}
+		command_memory[11]	<=	{4'b1001, 2'b01, 2'b11};		// ADR {OPCODE, DEST, SRC}
 
 
 		// 5th num
 		command_memory[12]	<=	{3'b010, 5'b00011};				// ADA {OPCODE, ADR[12:8]}
 		command_memory[13]	<=	{8'b11101100};					// ADA {OPCODE, ADR[7:0]} // ADR = 1004
 
-		command_memory[14]	<=	{4'b1001, 2'b01, 2'b00};		// ADR {OPCODE, DEST, SRC}
+		command_memory[14]	<=	{4'b1001, 2'b01, 2'b11};		// ADR {OPCODE, DEST, SRC}
 
 
 		// 6th num
 		command_memory[15]	<=	{3'b010, 5'b00011};				// ADA {OPCODE, ADR[12:8]}
 		command_memory[16]	<=	{8'b1110111};					// ADA {OPCODE, ADR[7:0]} // ADR = 1005
 
-		command_memory[17]	<=	{4'b1001, 2'b01, 2'b00};		// ADR {OPCODE, DEST, SRC}
+		command_memory[17]	<=	{4'b1001, 2'b01, 2'b11};		// ADR {OPCODE, DEST, SRC}
 
 
 		// 7th num
 		command_memory[18]	<=	{3'b010, 5'b00011};				// ADA {OPCODE, ADR[12:8]}
 		command_memory[19]	<=	{8'b11101110};					// ADA {OPCODE, ADR[7:0]} // ADR = 1006
 
-		command_memory[20]	<=	{4'b1001, 2'b01, 2'b00};		// ADR {OPCODE, DEST, SRC}
+		command_memory[20]	<=	{4'b1001, 2'b01, 2'b11};		// ADR {OPCODE, DEST, SRC}
 
 
 		// 8th num
 		command_memory[21]	<=	{3'b010, 5'b00011};				// ADA {OPCODE, ADR[12:8]}
 		command_memory[22]	<=	{8'b11101111};					// ADA {OPCODE, ADR[7:0]} // ADR = 1007
 
-		command_memory[23]	<=	{4'b1001, 2'b01, 2'b00};		// ADR {OPCODE, DEST, SRC}
+		command_memory[23]	<=	{4'b1001, 2'b01, 2'b11};		// ADR {OPCODE, DEST, SRC}
 
 
 		// 9th num
 		command_memory[24]	<=	{3'b010, 5'b00011};				// ADA {OPCODE, ADR[12:8]}
 		command_memory[25]	<=	{8'b11110000};					// ADA {OPCODE, ADR[7:0]} // ADR = 1008
 
-		command_memory[26]	<=	{4'b1001, 2'b01, 2'b00};		// ADR {OPCODE, DEST, SRC}
+		command_memory[26]	<=	{4'b1001, 2'b01, 2'b11};		// ADR {OPCODE, DEST, SRC}
 
 
 		// 10th num
 		command_memory[27]	<=	{3'b010, 5'b00011};				// ADA {OPCODE, ADR[12:8]}
 		command_memory[28]	<=	{8'b11110001};					// ADA {OPCODE, ADR[7:0]} // ADR = 1009
 
-		command_memory[29]	<=	{4'b1001, 2'b01, 2'b00};		// ADR {OPCODE, DEST, SRC}
+		command_memory[29]	<=	{4'b1001, 2'b01, 2'b11};		// ADR {OPCODE, DEST, SRC}
 
 
 		// store result on ADR = 2000 and ADR = 2001
